@@ -11,7 +11,5 @@ enum SwipeDirection {
   startToEnd,
 
   /// The [SwipeableTile] cannot be swiped by dragging.
-  none
+  none,
 }
-
-

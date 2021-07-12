@@ -9,7 +9,7 @@
 [![Twitter Badge](https://img.shields.io/badge/-watery_desert-1ca0f1?style=flat-square&logo=twitter&logoColor=white&link=https://twitter.com/watery_desert)](https://twitter.com/watery_desert)
 </div>
 
-# SwipeableTile
+# Swipeable Tile
 
 <img src="https://raw.githubusercontent.com/watery-desert/assets/main/swipeable_tile/demo_recording.gif"  width="500"/>
 
@@ -43,6 +43,79 @@ The package is fork of [Dismissible](https://api.flutter.dev/flutter/widgets/Dis
  - Set the `Scaffold`'s (or whatever background widget you are using) `backgroundColor` and `SwipeableTile`'s `color` same.
 
 ## How to use?
+
+ ```dart 
+ import 'package:swipeable_tile/swipeable_tile.dart';
+ ```
+
+### There are four named constructor:
+
+1. `SwipeableTile` This is just basic tile when you swipe there will be a, you can remove it by setting `isEelevated` to false. The corner will be rounded when dragged.
+
+```dart
+SwipeableTile(
+                  color: Colors.white,
+                  swipeThreshold: 0.2,
+                  direction: SwipeDirection.horizontal,
+                  onSwiped: (direction) {// Here call setState to update state
+                  },
+                  backgroundBuilder: (context, direction, progress) {
+                    if (direction == SwipeDirection.endToStart) {
+                      // return your widget
+                    } else if (direction == SwipeDirection.startToEnd) {
+                      // return your widget
+                    }
+                    return Container();
+                  },
+                  key: UniqueKey(),
+                  child: // Here Tile which will be shown at the top
+                ),
+
+```
+
+2. `SwipeableTile.card` This will make the tile look like card with rounded corner (will also be applied to the background) which will not animate unlike `SwipeableTile`. You also have to set the padding which will wrap around the tile as well background.
+
+```dart
+SwipeableTile.card(
+            color: Color(0xFFab9ee8),
+            shadow: BoxShadow(
+              color: Colors.black.withOpacity(0.35),
+              blurRadius: 4,
+              offset: Offset(2, 2),
+            ),
+            horizontalPadding: 16,
+            verticalPadding: 8,
+            direction: SwipeDirection.horizontal,
+            onSwiped: (direction) {
+             // Here call setState to update state
+            },
+            backgroundBuilder: (context, direction, progress) {
+                // You can animate background using the progress
+              return AnimatedBuilder(
+                animation: progress,
+                builder: (context, child) {
+                  return AnimatedContainer(
+                    duration: const Duration(milliseconds: 400),
+                    color: progress.value > 0.4
+                        ? Color(0xFFed7474)
+                        : Color(0xFFeded98),
+                  );
+                },
+              );
+            },
+            key: UniqueKey(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: // Here Tile which will be shown at the top
+            ),
+          ),
+```
+
+3. `SwipeableTile.swipeToTigger` This is exactly the same as `SwipeableTile` but instead of dismiss it will return back to initial position when maximum drag reaches `swipeThreshold`
+
+4. `SwipeableTile.swipeToTiggerCard` This is exactly the same as `SwipeableTile.card` but instead of dismiss it will return back to initial position when maximum drag reaches `swipeThreshold`
+
+
 
 You can build the background dynamically and animate them using `backgroundBuilder`. Use `direction` parameter to check swipe direction and show different widget. 
 
@@ -81,23 +154,12 @@ To tigger vibration you have to check when tile is dragged certain animation con
 
 `swipeThreshold` defines how far you can drag and will consider as dismiss. In case of swipe to tigger this will define maximun drag limit.
 
-
-**There are found named constructor:**
-
-1. `SwipeableTile` This is just basic tile when you swipe there will be a, you can remove it by setting `isEelevated` to false. The corner will be rounded when dragged.
-
-2. `SwipeableTile.card` This will make the tile look like card with rounded corner (will also be applied to the background) which will not animate unlike `SwipeableTile`. You also have to set the padding which will wrap around the tile as well background.
-
-3. `SwipeableTile.swipeToTigger` This is exactly the same as `SwipeableTile` but instead of dismiss it will return back to initial position when maximum drag reaches `swipeThreshold`
-
-4. `SwipeableTile.swipeToTiggerCard` This is exactly the same as `SwipeableTile.card` but instead of dismiss it will return back to initial position when maximum drag reaches `swipeThreshold`
-
 ### Use case of swipe to tigger:
 If you don't wanna swipe to dismiss instead you wanna slide or drag to a certain percentage to tigger something like, make done a task or rescheduled (show date picker) or add item to cart, you don't wanna remove from the list but still wanna do it without any extra button. And of course telegram swipe.
 
 ### How to Telegram swipe to reply?
 
-It's not possible to create the exact same effect like telegram. In Telegram when user swipes or drags after and a certain percent the icon appears with vibration (still dragable little), at this point if the user leaves then it selects that message and the tile returns back to initial position. But if the user drag back then the icon disappers (with vibration) leaving at this point will not cause any message select. It's possible to do from `backgroundBuilder` using `progress` parameter but to select exact message (or tile) requires calling `setState()` which is not possible from `backgroundBuilder` however you can call `setState()` from `onSwiped` callback which will invoke when the tile return to initial position. 
+It's not possible to create the exact same effect like telegram. In Telegram when user swipes or drags after a certain percent (not the maximum position still draggable little) the icon appears with vibration, at this point if the user leaves then it will select that message and the tile will return back to initial position. But if the user drag back then the icon disappers (with vibration) leaving at this point will not cause any message select. It's possible to do from `backgroundBuilder` using `progress` parameter but to select exact message (or tile) requires calling `setState()` which is not possible from `backgroundBuilder` however you can call `setState()` from `onSwiped` callback which will invoke when the tile return to initial position. 
 
 If you don't care about exact telegram UI & UX then vibrate & animate the icon when it's dragged maximum by checking `progress.isCompleted` or you can check animation value. Then call `setState()` from `onSwiped` User will not notice unless you set `movementDuration` to longer time and `swipeThreshold` to 0.4 (which is default). Check the example app how it's implemented.
 
