@@ -41,12 +41,12 @@ class NormalTile extends StatelessWidget {
             child: AnimatedBuilder(
               animation: controller,
               builder: (_, __) {
-                final radius = Radius.circular(
+                final Radius radius = Radius.circular(
                   Tween<double>(begin: 0, end: borderRadius)
                       .animate(
                         CurvedAnimation(
                           parent: controller,
-                          curve: Interval(0.0, 0.05),
+                          curve: const Interval(0.0, 0.05),
                         ),
                       )
                       .value,
@@ -66,7 +66,7 @@ class NormalTile extends StatelessWidget {
                             : Radius.zero,
                       ),
                       boxShadow: isEelevated
-                          ? [
+                          ? <BoxShadow>[
                               BoxShadow(
                                   blurRadius: 2.0,
                                   color: ColorTween(
@@ -76,7 +76,7 @@ class NormalTile extends StatelessWidget {
                                       .animate(
                                         CurvedAnimation(
                                           parent: controller,
-                                          curve: Interval(0.0, 0.05),
+                                          curve: const Interval(0.0, 0.05),
                                         ),
                                       )
                                       .value!)

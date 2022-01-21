@@ -40,7 +40,7 @@ class BuildTile extends StatefulWidget {
   final bool isEelevated;
 
   const BuildTile({
-    // required Key key,
+    Key? key,
     required this.child,
     required this.backgroundBuilder,
     required this.color,
@@ -57,8 +57,7 @@ class BuildTile extends StatefulWidget {
     required this.shadow,
     required this.swipeToTigger,
     required this.isEelevated,
-  });
-  // : super(key: key);
+  }) : super(key: key);
 
   @override
   _BuildTileState createState() => _BuildTileState();
@@ -113,7 +112,7 @@ class _BuildTileState extends State<BuildTile>
 
   double get _overallDragAxisExtent {
     final Size size = context.size!;
-    final threshold = widget.swipeThreshold;
+    final double threshold = widget.swipeThreshold;
 
     ///TODO: changed: DONE
     return widget.swipeToTigger ? size.width * threshold : size.width;
@@ -192,7 +191,8 @@ class _BuildTileState extends State<BuildTile>
     //     end: Offset(end, 0),
     //   ),
     // );
-    final endOffsetX = widget.swipeToTigger ? end * widget.swipeThreshold : end;
+    final double endOffsetX =
+        widget.swipeToTigger ? end * widget.swipeThreshold : end;
 
     ///TODO: Changed: DONE
     _moveAnimation = _moveController!.drive(
@@ -293,10 +293,11 @@ class _BuildTileState extends State<BuildTile>
         // _moveController!.reverse();
         _handleSwipeToTiggerAnimation();
       } else if (status == AnimationStatus.completed && !_dragUnderway) {
-        if (await _confirmStartResizeAnimation() == true)
+        if (await _confirmStartResizeAnimation() == true) {
           _startResizeAnimation();
-        else
+        } else {
           _moveController!.reverse();
+        }
       }
     }
 
@@ -368,15 +369,15 @@ class _BuildTileState extends State<BuildTile>
 
   @override
   Widget build(BuildContext context) {
-    final buildBackground =
+    final Widget buildBackground =
         widget.backgroundBuilder(context, _swipeDirection, _moveController!);
-    final direction = widget.direction;
-    final padding = widget.padding;
-    final isCard = widget.isCard;
-    final shadow = widget.shadow;
-    final borderRadius = widget.borderRadius;
-    final color = widget.color;
-    final isEelevated = widget.isEelevated;
+    final SwipeDirection direction = widget.direction;
+    final EdgeInsetsGeometry padding = widget.padding;
+    final bool isCard = widget.isCard;
+    final BoxShadow shadow = widget.shadow;
+    final double borderRadius = widget.borderRadius;
+    final Color color = widget.color;
+    final bool isEelevated = widget.isEelevated;
 
     super.build(context); // See AutomaticKeepAliveClientMixin.
 

@@ -1,6 +1,6 @@
 name: swipeable_tile
 description: A package to dismiss with animated background. Also Swipe to tigger action without dismiss.
-version: 0.0.2
+version: 1.0.0+1
 repository: https://github.com/watery-desert/swipeable_tile
 
 
@@ -15,6 +15,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^1.0.4
 
 flutter:
   uses-material-design: true

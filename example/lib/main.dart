@@ -5,10 +5,11 @@ import 'package:swipeable_tile/swipeable_tile.dart';
 import 'package:vibration/vibration.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,19 +19,21 @@ class MyApp extends StatelessWidget {
           primaryTextTheme: TextTheme(
             headline6: TextStyle(color: Colors.grey[800]),
           ),
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
             color: Colors.white,
             elevation: 0.0,
           ),
           primarySwatch: Colors.blue,
           canvasColor: Colors.white54,
           accentColor: Colors.amber.withOpacity(0.7)),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -39,8 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return PageView(
-      physics: ClampingScrollPhysics(),
-      children: [
+      physics: const ClampingScrollPhysics(),
+      children: const <Widget>[
         NormalScreen(),
         CardScreen(),
         ChatReplyScreen(),
@@ -62,13 +65,13 @@ class _NormalScreenState extends State<NormalScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Nomal Usecase'),
+        title: const Text('Nomal Usecase'),
       ),
       backgroundColor: Colors.white,
       body: ListView(
           children: persons
               .map(
-                (person) => SwipeableTile(
+                (Person person) => SwipeableTile(
                   color: Colors.white,
                   swipeThreshold: 0.2,
                   direction: SwipeDirection.horizontal,
@@ -79,7 +82,11 @@ class _NormalScreenState extends State<NormalScreen> {
                     //   persons.removeAt(index);
                     // });
                   },
-                  backgroundBuilder: (context, direction, progress) {
+                  backgroundBuilder: (
+                    _,
+                    SwipeDirection direction,
+                    AnimationController progress,
+                  ) {
                     if (direction == SwipeDirection.endToStart) {
                       return Container(color: Colors.red);
                     } else if (direction == SwipeDirection.startToEnd) {
@@ -94,7 +101,7 @@ class _NormalScreenState extends State<NormalScreen> {
                         child: Image.network(person.imageURL)),
                     title: Text(
                       person.name,
-                      style: TextStyle(fontWeight: FontWeight.w500),
+                      style: const TextStyle(fontWeight: FontWeight.w500),
                     ),
                     subtitle: Text('${person.state} ${person.streetAddress}'),
                   ),
@@ -120,17 +127,17 @@ class _CardScreenState extends State<CardScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Card Tile'),
+        title: const Text('Card Tile'),
       ),
       backgroundColor: Colors.white,
-      body: ListView(children: [
+      body: ListView(children: <Widget>[
         ...persons.map(
-          (person) => SwipeableTile.card(
-            color: Color(0xFFab9ee8),
+          (Person person) => SwipeableTile.card(
+            color: const Color(0xFFab9ee8),
             shadow: BoxShadow(
               color: Colors.black.withOpacity(0.35),
               blurRadius: 4,
-              offset: Offset(2, 2),
+              offset: const Offset(2, 2),
             ),
             horizontalPadding: 16,
             verticalPadding: 8,
@@ -142,15 +149,16 @@ class _CardScreenState extends State<CardScreen> {
               //   persons.removeAt(index);
               // });
             },
-            backgroundBuilder: (context, direction, progress) {
+            backgroundBuilder:
+                (_, SwipeDirection direction, AnimationController progress) {
               return AnimatedBuilder(
                 animation: progress,
-                builder: (context, child) {
+                builder: (_, __) {
                   return AnimatedContainer(
                     duration: const Duration(milliseconds: 400),
                     color: progress.value > 0.4
-                        ? Color(0xFFed7474)
-                        : Color(0xFFeded98),
+                        ? const Color(0xFFed7474)
+                        : const Color(0xFFeded98),
                   );
                 },
               );
@@ -164,12 +172,12 @@ class _CardScreenState extends State<CardScreen> {
                     child: Image.network(person.imageURL)),
                 title: Text(
                   person.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.w500, color: Colors.white),
                 ),
                 subtitle: Text(
                   '${person.state} ${person.city}',
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
               ),
             ),
@@ -204,16 +212,16 @@ class _ChatReplyScreenState extends State<ChatReplyScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'Swipe To Reply',
         ),
       ),
       body: Column(
         children: [
           Expanded(
-            child: ListView(children: [
+            child: ListView(children: <Widget>[
               ...persons.map(
-                (person) => SwipeableTile.swipeToTigger(
+                (Person person) => SwipeableTile.swipeToTigger(
                   behavior: HitTestBehavior.translucent,
                   isEelevated: false,
                   color: Colors.white,
@@ -225,21 +233,23 @@ class _ChatReplyScreenState extends State<ChatReplyScreen> {
                       _selectedPerson = person;
                     });
                   },
-                  backgroundBuilder: (context, direction, progress) {
+                  backgroundBuilder: (
+                    _,
+                    SwipeDirection direction,
+                    AnimationController progress,
+                  ) {
                     bool vibrated = false;
                     return AnimatedBuilder(
                       animation: progress,
-                      builder: (context, child) {
+                      builder: (_, __) {
                         if (progress.value > 0.9999 && !vibrated) {
                           Vibration.vibrate(duration: 40);
                           vibrated = true;
                         } else if (progress.value < 0.9999) {
                           vibrated = false;
                         }
-
-                        return AnimatedContainer(
+                        return Container(
                           alignment: Alignment.centerRight,
-                          duration: const Duration(milliseconds: 400),
                           child: Padding(
                             padding: const EdgeInsets.only(right: 16.0),
                             child: Transform.scale(
@@ -250,8 +260,8 @@ class _ChatReplyScreenState extends State<ChatReplyScreen> {
                                   .animate(
                                     CurvedAnimation(
                                       parent: progress,
-                                      curve: Interval(0.4, 1.0,
-                                          curve: Curves.elasticOut),
+                                      curve: const Interval(0.5, 1.0,
+                                          curve: Curves.linear),
                                     ),
                                   )
                                   .value,
@@ -277,44 +287,44 @@ class _ChatReplyScreenState extends State<ChatReplyScreen> {
           ),
           ClipRect(
             child: BackdropFilter(
-              filter: new ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+              filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
               child: Container(
                 color: Colors.grey.shade200.withOpacity(0.5),
                 child: SafeArea(
                   top: false,
                   child: Column(
-                    children: [
+                    children: <Widget>[
                       _selectedPerson != null
                           ? Container(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 4.0),
                               child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                children: <Widget>[
+                                  const Padding(
+                                    padding: EdgeInsets.all(8.0),
                                     child: Icon(
                                       Icons.reply_rounded,
                                       color: Colors.blue,
                                       size: 30,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 8.0,
                                   ),
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      children: [
+                                      children: <Widget>[
                                         Text(
                                           _selectedPerson!.name,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 16,
                                             color: Colors.blue,
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 4.0,
                                         ),
                                         Text(
@@ -342,7 +352,7 @@ class _ChatReplyScreenState extends State<ChatReplyScreen> {
                                 ],
                               ),
                             )
-                          : SizedBox.shrink(),
+                          : const SizedBox.shrink(),
                       TextField(
                         controller: _controller,
                         focusNode: _focusNode,
@@ -352,16 +362,16 @@ class _ChatReplyScreenState extends State<ChatReplyScreen> {
                         decoration: InputDecoration(
                           // filled: true,
                           // fillColor: Color(0xFFe8e6d5)
-                          contentPadding: EdgeInsets.all(16),
+                          contentPadding: const EdgeInsets.all(16),
                           hintText: 'Type your message',
                           suffixIcon: IconButton(
-                            icon: Icon(Icons.send),
+                            icon: const Icon(Icons.send),
                             onPressed: () {},
                           ),
-                          enabledBorder:
-                              UnderlineInputBorder(borderSide: BorderSide.none),
-                          border:
-                              UnderlineInputBorder(borderSide: BorderSide.none),
+                          enabledBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide.none),
+                          border: const UnderlineInputBorder(
+                              borderSide: BorderSide.none),
 
                           // ),
                         ),
@@ -393,7 +403,7 @@ class MessageBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top: 16.0, left: 16.0),
           child: ClipRRect(
@@ -410,19 +420,19 @@ class MessageBubble extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             margin: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-                color: Color(0xFFa1ffb7),
+                color: const Color(0xFFa1ffb7),
                 borderRadius: BorderRadius.circular(16)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Text(
                   name,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
                       color: Color(0xFF457d52)),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8.0,
                 ),
                 Text(message),
@@ -435,7 +445,7 @@ class MessageBubble extends StatelessWidget {
   }
 }
 
-List<Person> persons = [
+List<Person> persons = <Person>[
   Person(
       name: 'Timothy Altenwerth',
       city: 'East Port Vincechester',
