@@ -135,7 +135,7 @@ SwipeableTile.card(
 ),
 ```
 
-3. `SwipeableTile.swipeToTigger` This is exactly the same as `SwipeableTile` but instead of dismiss it, it will tigger an action. The Tile will return back to initial position when maximum drag reaches `swipeThreshold`
+3. `SwipeableTile.swipeToTigger` This is exactly the same as `SwipeableTile` but instead of dismiss it, it will tigger an action. The tile will return back to initial position when maximum drag reaches `swipeThreshold`
 
 4. `SwipeableTile.swipeToTiggerCard` This is exactly the same as `SwipeableTile.card` but instead of dismiss it, it will tigger an action. The tile will return back to initial position when maximum drag reaches `swipeThreshold`
 

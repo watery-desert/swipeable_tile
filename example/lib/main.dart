@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           ),
           primarySwatch: Colors.blue,
           canvasColor: Colors.white54,
-          accentColor: Colors.amber.withOpacity(0.7)),
+       ),
       home: const MyHomePage(),
     );
   }
