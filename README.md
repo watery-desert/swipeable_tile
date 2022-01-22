@@ -18,6 +18,9 @@
 
 <div>
 
+## Features
+#### Animated tile and backgound while swiping. Add padding to tile. Swipe to tigger action.
+
 <img src="https://raw.githubusercontent.com/watery-desert/assets/main/swipeable_tile/demo_recording.gif"  width="400"/>
 
 
@@ -45,9 +48,6 @@ The package is fork of [Dismissible](https://api.flutter.dev/flutter/widgets/Dis
 
 4. Swipe to tigger action function. Similar to telegram or instagram DM message reply.
 
-### Do and don't
- - Don't call `setState()` from `backgroundBuilder`.
- - Set the `Scaffold`'s (or whatever background widget you are using) `backgroundColor` and `SwipeableTile` or `SwipeableTile.swipeToTigger`'s `color` same.
 
 ## How to use?
 
@@ -67,9 +67,14 @@ Add this line to import the package.
 import 'package:swipeable_tile/swipeable_tile.dart';
 ```
 
+### Do and don't
+ - Don't call `setState()` from `backgroundBuilder`.
+ - Set the `Scaffold`'s (or whatever background widget you are using) `backgroundColor` and `SwipeableTile` or `SwipeableTile.swipeToTigger`'s `color` same.
+
+
 ### There are four named constructors:
 
-1. `SwipeableTile` This is the basic tile when you swipe there will be a, you can remove it by setting `isEelevated` to false. The corner will be rounded when dragged.
+1. `SwipeableTile` When the tile is swiped there will be an elevation (remove elevation by setting `isEelevated` to `false`) and rounded corner to the tile (set `borderRadius` to 0 if you don't want rounded corner).
 
 ```dart
 SwipeableTile(
@@ -92,7 +97,7 @@ SwipeableTile(
 
 ```
 
-2. `SwipeableTile.card` This will make the tile look like card with rounded corner which will not animate unlike `SwipeableTile`. You also have to set the padding which will wrap around the tile as well background.
+2. `SwipeableTile.card` This will make the tile look like card with constant rounded corner, unlike `SwipeableTile`. You also have to set the padding which will wrap around the tile as well background.
 
 ```dart
 SwipeableTile.card(
@@ -130,9 +135,9 @@ SwipeableTile.card(
 ),
 ```
 
-3. `SwipeableTile.swipeToTigger` This is exactly the same as `SwipeableTile` but instead of dismiss it, tile will return back to initial position when maximum drag reaches `swipeThreshold`
+3. `SwipeableTile.swipeToTigger` This is exactly the same as `SwipeableTile` but instead of dismiss it, it will tigger an action. The Tile will return back to initial position when maximum drag reaches `swipeThreshold`
 
-4. `SwipeableTile.swipeToTiggerCard` This is exactly the same as `SwipeableTile.card` but instead of dismiss it will return back to initial position when maximum drag reaches `swipeThreshold`
+4. `SwipeableTile.swipeToTiggerCard` This is exactly the same as `SwipeableTile.card` but instead of dismiss it, it will tigger an action. The tile will return back to initial position when maximum drag reaches `swipeThreshold`
 
 
 
@@ -149,7 +154,7 @@ You can build the background dynamically and animate them using `backgroundBuild
 },
 ```
 
-And the `progress` is basically the same animation controller responsible for tile slide animation. You can use this controller and animate the background.
+The `progress` is basically the same animation controller responsible for tile slide animation. You can use this controller to animate the background.
 
 To tigger vibration you have to check when tile is dragged certain animation controller value. And I used [vibration package](https://pub.dev/packages/vibration) for vibration and worked batter than [HapticFeedback](https://api.flutter.dev/flutter/services/HapticFeedback-class.html)
 
