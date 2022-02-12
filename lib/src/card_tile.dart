@@ -49,7 +49,7 @@ class CardTile extends StatelessWidget {
               decoration: BoxDecoration(
                 color: color,
                 borderRadius: BorderRadius.circular(borderRadius),
-                boxShadow: [shadow],
+                boxShadow: <BoxShadow>[shadow],
               ),
               child: child,
             ),
