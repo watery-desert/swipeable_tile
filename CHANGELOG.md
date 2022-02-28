@@ -1,3 +1,5 @@
+## 1.0.0+5
+- Added discord link
 ## 1.0.0+4
 - Reformated code to fix pub score
 ## 1.0.0+3
