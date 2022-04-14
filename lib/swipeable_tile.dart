@@ -11,7 +11,7 @@ class SwipeableTile extends StatelessWidget {
   final bool isCard;
   final BoxShadow shadow;
   final double borderRadius;
-  final Color color;
+  final Color? color;
 
   /// How to behave during hit tests.
   ///
@@ -65,9 +65,9 @@ class SwipeableTile extends StatelessWidget {
   const SwipeableTile({
     required Key key,
     required this.child,
-    required this.backgroundBuilder,
-    required this.color,
+    required this.backgroundBuilder, 
     required this.onSwiped,
+    this.color,
     this.swipeThreshold = 0.4,
     this.confirmSwipe,
     this.borderRadius = 8.0,
@@ -101,8 +101,8 @@ class SwipeableTile extends StatelessWidget {
     required this.horizontalPadding,
     required this.verticalPadding,
     required this.shadow,
-    required this.color,
     required this.onSwiped,
+    this.color,
     this.borderRadius = 16,
     this.swipeThreshold = 0.4,
     this.confirmSwipe,
@@ -131,8 +131,8 @@ class SwipeableTile extends StatelessWidget {
     required Key key,
     required this.child,
     required this.backgroundBuilder,
-    required this.color,
     required this.onSwiped,
+    this.color,
     this.swipeThreshold = 0.4,
     this.borderRadius = 8.0,
     this.direction = SwipeDirection.endToStart,
@@ -167,8 +167,8 @@ class SwipeableTile extends StatelessWidget {
     required this.horizontalPadding,
     required this.verticalPadding,
     required this.shadow,
-    required this.color,
     required this.onSwiped,
+    this.color,
     this.borderRadius = 16,
     this.swipeThreshold = 0.4,
     this.direction = SwipeDirection.endToStart,
