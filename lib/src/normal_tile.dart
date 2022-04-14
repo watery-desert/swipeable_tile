@@ -10,7 +10,7 @@ class NormalTile extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final double borderRadius;
   final Color color;
-  final bool isEelevated;
+  final bool isElevated;
 
   const NormalTile({
     Key? key,
@@ -22,7 +22,7 @@ class NormalTile extends StatelessWidget {
     required this.padding,
     required this.borderRadius,
     required this.color,
-    required this.isEelevated,
+    required this.isElevated,
   }) : super(key: key);
 
   @override
@@ -65,7 +65,7 @@ class NormalTile extends StatelessWidget {
                             ? radius
                             : Radius.zero,
                       ),
-                      boxShadow: isEelevated
+                      boxShadow: isElevated
                           ? <BoxShadow>[
                               BoxShadow(
                                   blurRadius: 2.0,

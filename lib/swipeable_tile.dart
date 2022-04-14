@@ -22,7 +22,7 @@ class SwipeableTile extends StatelessWidget {
   final BackgroundBuilder backgroundBuilder;
 
   /// The offset threshold the item has to be dragged in order to be considered
-  /// dismissed. For swipeToTigger it will be maximum siwpe offset.
+  /// dismissed. For swipeToTrigger it will be maximum siwpe offset.
   final double swipeThreshold;
 
   /// The direction in which the widget can be swiped.
@@ -48,10 +48,10 @@ class SwipeableTile extends StatelessWidget {
   /// The widget below this widget in the tree.
   final Widget child;
 
-  final bool swipeToTigger;
+  final bool swipeToTrigger;
 
   /// If there will be any elevation while swiping.
-  final bool isEelevated;
+  final bool isElevated;
 
   ///For basic swipe to dismiss. With slight elevation.
   ///
@@ -75,9 +75,9 @@ class SwipeableTile extends StatelessWidget {
     this.resizeDuration = const Duration(milliseconds: 300),
     this.movementDuration = const Duration(milliseconds: 200),
     this.behavior = HitTestBehavior.opaque,
-    this.isEelevated = true,
+    this.isElevated = true,
   })  : isCard = false,
-        swipeToTigger = false,
+        swipeToTrigger = false,
         horizontalPadding = 0,
         verticalPadding = 1,
         shadow = const BoxShadow(color: Colors.black),
@@ -111,8 +111,8 @@ class SwipeableTile extends StatelessWidget {
     this.movementDuration = const Duration(milliseconds: 200),
     this.behavior = HitTestBehavior.opaque,
   })  : isCard = true,
-        swipeToTigger = false,
-        isEelevated = false,
+        swipeToTrigger = false,
+        isElevated = false,
         assert(swipeThreshold > 0.0 && swipeThreshold < 1.0),
         super(key: key);
 
@@ -127,7 +127,7 @@ class SwipeableTile extends StatelessWidget {
   /// state of the swiped item. Using keys causes the widgets to sync
   /// according to their keys and avoids this pitfall.
 
-  const SwipeableTile.swipeToTigger({
+  const SwipeableTile.swipeToTrigger({
     required Key key,
     required this.child,
     required this.backgroundBuilder,
@@ -138,19 +138,19 @@ class SwipeableTile extends StatelessWidget {
     this.direction = SwipeDirection.endToStart,
     this.movementDuration = const Duration(milliseconds: 200),
     this.behavior = HitTestBehavior.opaque,
-    this.isEelevated = true,
+    this.isElevated = true,
   })  : isCard = false,
         horizontalPadding = 0,
         verticalPadding = 1,
         confirmSwipe = null,
         // onSwiped = null,
         resizeDuration = null,
-        swipeToTigger = true,
+        swipeToTrigger = true,
         shadow = const BoxShadow(color: Colors.black),
         assert(swipeThreshold > 0.0 && swipeThreshold <= 0.5),
         super(key: key);
 
-  /// Similar to [SwipeableTile.swipeToTigger] with additional card effet like,
+  /// Similar to [SwipeableTile.swipeToTrigger] with additional card effet like,
   /// rounded corner, padding and elevation.
   ///
   /// The [key] argument must not be null because [SwipeableTile]s are commonly
@@ -160,7 +160,7 @@ class SwipeableTile extends StatelessWidget {
   /// state of the swiped item. Using keys causes the widgets to sync
   /// according to their keys and avoids this pitfall.
 
-  const SwipeableTile.swipeToTiggerCard({
+  const SwipeableTile.swipeToTriggerCard({
     required Key key,
     required this.child,
     required this.backgroundBuilder,
@@ -175,9 +175,9 @@ class SwipeableTile extends StatelessWidget {
     this.movementDuration = const Duration(milliseconds: 200),
     this.behavior = HitTestBehavior.opaque,
   })  : isCard = true,
-        swipeToTigger = true,
+        swipeToTrigger = true,
         confirmSwipe = null,
-        isEelevated = false,
+        isElevated = false,
         resizeDuration = null,
         assert(swipeThreshold > 0.0 && swipeThreshold <= 0.5),
         super(key: key);
@@ -202,8 +202,8 @@ class SwipeableTile extends StatelessWidget {
       resizeDuration: resizeDuration,
       shadow: shadow,
       swipeThreshold: swipeThreshold,
-      swipeToTigger: swipeToTigger,
-      isEelevated: isEelevated,
+      swipeToTrigger: swipeToTrigger,
+      isElevated: isElevated,
     );
   }
 }

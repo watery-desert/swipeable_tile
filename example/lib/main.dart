@@ -75,7 +75,7 @@ class _NormalScreenState extends State<NormalScreen> {
                 color: Colors.white,
                 swipeThreshold: 0.2,
                 direction: SwipeDirection.horizontal,
-                isEelevated: false,
+                isElevated: false,
                 borderRadius: 0,
                 onSwiped: (_) {
                   // final index = persons.indexOf(person);
@@ -225,9 +225,9 @@ class _ChatReplyScreenState extends State<ChatReplyScreen> {
           Expanded(
             child: ListView(children: <Widget>[
               ...persons.map(
-                (Person person) => SwipeableTile.swipeToTigger(
+                (Person person) => SwipeableTile.swipeToTrigger(
                   behavior: HitTestBehavior.translucent,
-                  isEelevated: false,
+                  isElevated: false,
                   color: Colors.white,
                   swipeThreshold: 0.2,
                   direction: SwipeDirection.endToStart,
