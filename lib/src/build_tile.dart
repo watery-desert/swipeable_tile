@@ -35,8 +35,8 @@ class BuildTile extends StatefulWidget {
   final ConfirmSwipeCallback? confirmSwipe;
   final Widget child;
   final EdgeInsetsGeometry padding;
-  final bool swipeToTigger;
-  final bool isEelevated;
+  final bool swipeToTrigger;
+  final bool isElevated;
 
   const BuildTile({
     Key? key,
@@ -54,8 +54,8 @@ class BuildTile extends StatefulWidget {
     required this.padding,
     required this.isCard,
     required this.shadow,
-    required this.swipeToTigger,
-    required this.isEelevated,
+    required this.swipeToTrigger,
+    required this.isElevated,
   }) : super(key: key);
 
   @override
@@ -114,7 +114,7 @@ class _BuildTileState extends State<BuildTile>
     final double threshold = widget.swipeThreshold;
 
     ///TODO: changed: DONE
-    return widget.swipeToTigger ? size.width * threshold : size.width;
+    return widget.swipeToTrigger ? size.width * threshold : size.width;
 
     // return size.width;
   }
@@ -191,7 +191,7 @@ class _BuildTileState extends State<BuildTile>
     //   ),
     // );
     final double endOffsetX =
-        widget.swipeToTigger ? end * widget.swipeThreshold : end;
+        widget.swipeToTrigger ? end * widget.swipeThreshold : end;
 
     ///TODO: Changed: DONE
     _moveAnimation = _moveController!.drive(
@@ -231,11 +231,11 @@ class _BuildTileState extends State<BuildTile>
         await _confirmStartResizeAnimation() == true) {
       ///TODO:changed:Done
 
-      if (widget.swipeToTigger) {
+      if (widget.swipeToTrigger) {
         // final SwipeDirection direction = _swipeDirection;
         // widget.onSwiped(direction);
         // _moveController!.reverse();
-        _handleSwipeToTiggerAnimation();
+        _handleSwipeToTriggerAnimation();
       } else {
         _startResizeAnimation();
       }
@@ -269,7 +269,7 @@ class _BuildTileState extends State<BuildTile>
           // we already know it's not completed, we check that above
           if (_moveController!.value > (widget.swipeThreshold)) {
             ///TODO: changed: DONE
-            if (widget.swipeToTigger) {
+            if (widget.swipeToTrigger) {
               _moveController!.reverse();
             } else {
               _moveController!.forward();
@@ -286,11 +286,11 @@ class _BuildTileState extends State<BuildTile>
 
   Future<void> _handleDismissStatusChanged(AnimationStatus status) async {
     if (status == AnimationStatus.completed && !_dragUnderway) {
-      if (widget.swipeToTigger) {
+      if (widget.swipeToTrigger) {
         // final SwipeDirection direction = _swipeDirection;
         // widget.onSwiped(direction);
         // _moveController!.reverse();
-        _handleSwipeToTiggerAnimation();
+        _handleSwipeToTriggerAnimation();
       } else if (status == AnimationStatus.completed && !_dragUnderway) {
         if (await _confirmStartResizeAnimation() == true) {
           _startResizeAnimation();
@@ -319,7 +319,7 @@ class _BuildTileState extends State<BuildTile>
     return true;
   }
 
-  void _handleSwipeToTiggerAnimation() async {
+  void _handleSwipeToTriggerAnimation() async {
     // assert(_moveController!.isCompleted);
     await _moveController!.reverse();
     final SwipeDirection direction = _swipeDirection;
@@ -331,7 +331,7 @@ class _BuildTileState extends State<BuildTile>
     assert(_moveController!.isCompleted);
     assert(_resizeController == null);
     assert(_sizePriorToCollapse == null);
-    // if (widget.swipeToTigger) {
+    // if (widget.swipeToTrigger) {
     //   final SwipeDirection direction = _swipeDirection;
     //   if (_moveController!.status == AnimationStatus.dismissed) {
     //     widget.onSwiped(direction);
@@ -376,7 +376,7 @@ class _BuildTileState extends State<BuildTile>
     final BoxShadow shadow = widget.shadow;
     final double borderRadius = widget.borderRadius;
     final Color color = widget.color;
-    final bool isEelevated = widget.isEelevated;
+    final bool isElevated = widget.isElevated;
 
     super.build(context); // See AutomaticKeepAliveClientMixin.
 
@@ -437,7 +437,7 @@ class _BuildTileState extends State<BuildTile>
             padding: padding,
             borderRadius: borderRadius,
             color: color,
-            isEelevated: isEelevated,
+            isElevated: isElevated,
           );
     // We are not resizing but we may be being dragging in widget.direction.
     return GestureDetector(
