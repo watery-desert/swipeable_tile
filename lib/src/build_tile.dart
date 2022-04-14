@@ -24,7 +24,7 @@ class BuildTile extends StatefulWidget {
   final bool isCard;
   final BoxShadow shadow;
   final double borderRadius;
-  final Color color;
+  final Color? color;
   final HitTestBehavior behavior;
   final BackgroundBuilder backgroundBuilder;
   final double swipeThreshold;
@@ -40,9 +40,9 @@ class BuildTile extends StatefulWidget {
 
   const BuildTile({
     Key? key,
+    this.color,
     required this.child,
     required this.backgroundBuilder,
-    required this.color,
     required this.swipeThreshold,
     required this.confirmSwipe,
     required this.borderRadius,
@@ -375,7 +375,7 @@ class _BuildTileState extends State<BuildTile>
     final bool isCard = widget.isCard;
     final BoxShadow shadow = widget.shadow;
     final double borderRadius = widget.borderRadius;
-    final Color color = widget.color;
+    final Color? color = widget.color;
     final bool isEelevated = widget.isEelevated;
 
     super.build(context); // See AutomaticKeepAliveClientMixin.
