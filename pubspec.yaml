@@ -1,6 +1,6 @@
 name: swipeable_tile
 description: A package to dismiss with animated background. Also Swipe to tigger action without dismiss.
-version: 1.0.0+7
+version: 1.0.0+10
 repository: https://github.com/watery-desert/swipeable_tile
 
 

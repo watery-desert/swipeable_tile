@@ -1,4 +1,5 @@
-library swipeable_tile;
+// library swipeable_tile;
+
 
 import 'package:flutter/material.dart';
 import 'src/const/enums.dart';
