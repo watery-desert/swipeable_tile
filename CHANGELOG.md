@@ -1,4 +1,4 @@
-## 1.0.0+10
+## 1.0.0+11
 - Readme update
 ## 1.0.0+7
 - Readme update

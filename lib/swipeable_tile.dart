@@ -1,6 +1,5 @@
 // library swipeable_tile;
 
-
 import 'package:flutter/material.dart';
 import 'src/const/enums.dart';
 import 'src/build_tile.dart';
@@ -13,6 +12,9 @@ class SwipeableTile extends StatelessWidget {
   final BoxShadow shadow;
   final double borderRadius;
   final Color color;
+
+  /// this is just int count.
+  final int count;
 
   /// How to behave during hit tests.
   ///
@@ -69,6 +71,7 @@ class SwipeableTile extends StatelessWidget {
     required this.backgroundBuilder,
     required this.color,
     required this.onSwiped,
+    this.count = 0,
     this.swipeThreshold = 0.4,
     this.confirmSwipe,
     this.borderRadius = 8.0,
@@ -104,6 +107,7 @@ class SwipeableTile extends StatelessWidget {
     required this.shadow,
     required this.color,
     required this.onSwiped,
+    this.count = 0,
     this.borderRadius = 16,
     this.swipeThreshold = 0.4,
     this.confirmSwipe,
@@ -134,6 +138,7 @@ class SwipeableTile extends StatelessWidget {
     required this.backgroundBuilder,
     required this.color,
     required this.onSwiped,
+    this.count = 0,
     this.swipeThreshold = 0.4,
     this.borderRadius = 8.0,
     this.direction = SwipeDirection.endToStart,
@@ -170,6 +175,7 @@ class SwipeableTile extends StatelessWidget {
     required this.shadow,
     required this.color,
     required this.onSwiped,
+    this.count = 0,
     this.borderRadius = 16,
     this.swipeThreshold = 0.4,
     this.direction = SwipeDirection.endToStart,
