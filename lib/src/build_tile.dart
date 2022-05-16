@@ -20,7 +20,6 @@ typedef BackgroundBuilder = Widget Function(BuildContext context,
 
 enum _FlingGestureKind { none, forward, reverse }
 
-
 class SwipeableTile extends StatefulWidget {
   final double horizontalPadding;
   final double verticalPadding;
