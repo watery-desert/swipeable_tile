@@ -9,10 +9,10 @@ const double _kMinFlingVelocity = 700.0;
 const double _kMinFlingVelocityDelta = 400.0;
 const double _kFlingVelocityScale = 1.0 / 300.0;
 
-/// Used by [BuildTile.onSwiped].
+/// Used by [SwipeableTile.onSwiped].
 typedef SwipedCallback = void Function(SwipeDirection direction);
 
-/// Used by [BuildTile.confirmSwipe].
+/// Used by [SwipeableTile.confirmSwipe].
 typedef ConfirmSwipeCallback = Future<bool?> Function(SwipeDirection direction);
 
 typedef BackgroundBuilder = Widget Function(BuildContext context,
@@ -20,49 +20,189 @@ typedef BackgroundBuilder = Widget Function(BuildContext context,
 
 enum _FlingGestureKind { none, forward, reverse }
 
-class BuildTile extends StatefulWidget {
+
+class SwipeableTile extends StatefulWidget {
+  final double horizontalPadding;
+  final double verticalPadding;
   final bool isCard;
   final BoxShadow shadow;
   final double borderRadius;
   final Color color;
-  final HitTestBehavior behavior;
-  final BackgroundBuilder backgroundBuilder;
-  final double swipeThreshold;
-  final SwipeDirection direction;
-  final Duration? resizeDuration;
-  final Duration movementDuration;
-  final SwipedCallback onSwiped;
-  final ConfirmSwipeCallback? confirmSwipe;
-  final Widget child;
-  final EdgeInsetsGeometry padding;
-  final bool swipeToTigger;
-  final bool isEelevated;
 
-  const BuildTile({
-    Key? key,
+  /// How to behave during hit tests.
+  ///
+  /// This defaults to [HitTestBehavior.opaque].
+  final HitTestBehavior behavior;
+
+  /// A widget that is stacked behind the child.
+  final BackgroundBuilder backgroundBuilder;
+
+  /// The offset threshold the item has to be dragged in order to be considered
+  /// dismissed. For swipeToTrigger it will be maximum siwpe offset.
+  final double swipeThreshold;
+
+  /// The direction in which the widget can be swiped.
+  final SwipeDirection direction;
+
+  /// The amount of time the widget will spend contracting before [onSwiped]
+  /// is called. If null, the widget will not contract and [onSwiped] will
+  /// be called immediately after the widget is swiped.
+  final Duration? resizeDuration;
+
+  /// Defines the duration for card to dismiss or to come back to original
+  /// position if not swiped.
+  final Duration movementDuration;
+
+  /// Called when the widget has been swiped, after finishing resizing.
+  final SwipedCallback onSwiped;
+
+  /// Gives the app an opportunity to confirm or veto a pending swipe.
+  /// If the returned Future<bool?> completes to false or null [onSwiped]
+  /// callbacks will not run.
+  final ConfirmSwipeCallback? confirmSwipe;
+
+  /// The widget below this widget in the tree.
+  final Widget child;
+
+  final bool swipeToTrigger;
+
+  /// If there will be any elevation while swiping.
+  final bool isElevated;
+
+  ///For basic swipe to dismiss. With slight elevation.
+  ///
+  /// The [key] argument must not be null because [SwipeableTile]s are commonly
+  /// used in lists and removed from the list when swiped. Without keys, the
+  /// default behavior is to sync widgets based on their index in the list,
+  /// which means the item after the swiped item would be synced with the
+  /// state of the swiped item. Using keys causes the widgets to sync
+  /// according to their keys and avoids this pitfall.
+
+  const SwipeableTile({
+    required Key key,
     required this.child,
     required this.backgroundBuilder,
     required this.color,
-    required this.swipeThreshold,
-    required this.confirmSwipe,
-    required this.borderRadius,
     required this.onSwiped,
-    required this.direction,
-    required this.resizeDuration,
-    required this.movementDuration,
-    required this.behavior,
-    required this.padding,
-    required this.isCard,
+    this.swipeThreshold = 0.4,
+    this.confirmSwipe,
+    this.borderRadius = 8.0,
+    this.direction = SwipeDirection.endToStart,
+    this.resizeDuration = const Duration(milliseconds: 300),
+    this.movementDuration = const Duration(milliseconds: 200),
+    this.behavior = HitTestBehavior.opaque,
+    this.isElevated = true,
+  })  : isCard = false,
+        swipeToTrigger = false,
+        horizontalPadding = 0,
+        verticalPadding = 1,
+        shadow = const BoxShadow(color: Colors.black),
+        assert(swipeThreshold > 0.0 && swipeThreshold < 1.0),
+        super(key: key);
+
+  /// Similar to normal [SwipeableTile] with additional card effet like,
+  /// rounded corner, padding and elevation.
+  ///
+  /// The [key] argument must not be null because [SwipeableTile]s are commonly
+  /// used in lists and removed from the list when swiped. Without keys, the
+  /// default behavior is to sync widgets based on their index in the list,
+  /// which means the item after the swiped item would be synced with the
+  /// state of the swiped item. Using keys causes the widgets to sync
+  /// according to their keys and avoids this pitfall.
+
+  const SwipeableTile.card({
+    required Key key,
+    required this.child,
+    required this.backgroundBuilder,
+    required this.horizontalPadding,
+    required this.verticalPadding,
     required this.shadow,
-    required this.swipeToTigger,
-    required this.isEelevated,
-  }) : super(key: key);
+    required this.color,
+    required this.onSwiped,
+    this.borderRadius = 16,
+    this.swipeThreshold = 0.4,
+    this.confirmSwipe,
+    this.direction = SwipeDirection.endToStart,
+    this.resizeDuration = const Duration(milliseconds: 300),
+    this.movementDuration = const Duration(milliseconds: 200),
+    this.behavior = HitTestBehavior.opaque,
+  })  : isCard = true,
+        swipeToTrigger = false,
+        isElevated = false,
+        assert(swipeThreshold > 0.0 && swipeThreshold < 1.0),
+        super(key: key);
+
+  /// Similar to [SwipeableTile] but It doesn't allow dismiss instead you
+  /// can swipe until [swipeThreshold] also doesn't have [confirmSwipe],
+  /// [onSwiped], [resizeDuration]
+  ///
+  /// The [key] argument must not be null because [SwipeableTile]s are commonly
+  /// used in lists and removed from the list when swiped. Without keys, the
+  /// default behavior is to sync widgets based on their index in the list,
+  /// which means the item after the swiped item would be synced with the
+  /// state of the swiped item. Using keys causes the widgets to sync
+  /// according to their keys and avoids this pitfall.
+
+  const SwipeableTile.swipeToTrigger({
+    required Key key,
+    required this.child,
+    required this.backgroundBuilder,
+    required this.color,
+    required this.onSwiped,
+    this.swipeThreshold = 0.4,
+    this.borderRadius = 8.0,
+    this.direction = SwipeDirection.endToStart,
+    this.movementDuration = const Duration(milliseconds: 200),
+    this.behavior = HitTestBehavior.opaque,
+    this.isElevated = true,
+  })  : isCard = false,
+        horizontalPadding = 0,
+        verticalPadding = 1,
+        confirmSwipe = null,
+        // onSwiped = null,
+        resizeDuration = null,
+        swipeToTrigger = true,
+        shadow = const BoxShadow(color: Colors.black),
+        assert(swipeThreshold > 0.0 && swipeThreshold <= 0.5),
+        super(key: key);
+
+  /// Similar to [SwipeableTile.swipeToTrigger] with additional card effet like,
+  /// rounded corner, padding and elevation.
+  ///
+  /// The [key] argument must not be null because [SwipeableTile]s are commonly
+  /// used in lists and removed from the list when swiped. Without keys, the
+  /// default behavior is to sync widgets based on their index in the list,
+  /// which means the item after the swiped item would be synced with the
+  /// state of the swiped item. Using keys causes the widgets to sync
+  /// according to their keys and avoids this pitfall.
+
+  const SwipeableTile.swipeToTriggerCard({
+    required Key key,
+    required this.child,
+    required this.backgroundBuilder,
+    required this.horizontalPadding,
+    required this.verticalPadding,
+    required this.shadow,
+    required this.color,
+    required this.onSwiped,
+    this.borderRadius = 16,
+    this.swipeThreshold = 0.4,
+    this.direction = SwipeDirection.endToStart,
+    this.movementDuration = const Duration(milliseconds: 200),
+    this.behavior = HitTestBehavior.opaque,
+  })  : isCard = true,
+        swipeToTrigger = true,
+        confirmSwipe = null,
+        isElevated = false,
+        resizeDuration = null,
+        assert(swipeThreshold > 0.0 && swipeThreshold <= 0.5),
+        super(key: key);
 
   @override
-  _BuildTileState createState() => _BuildTileState();
+  _SwipeableTileState createState() => _SwipeableTileState();
 }
 
-class _BuildTileState extends State<BuildTile>
+class _SwipeableTileState extends State<SwipeableTile>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   AnimationController? _moveController;
   late Animation<Offset> _moveAnimation;
@@ -114,7 +254,7 @@ class _BuildTileState extends State<BuildTile>
     final double threshold = widget.swipeThreshold;
 
     ///TODO: changed: DONE
-    return widget.swipeToTigger ? size.width * threshold : size.width;
+    return widget.swipeToTrigger ? size.width * threshold : size.width;
 
     // return size.width;
   }
@@ -191,7 +331,7 @@ class _BuildTileState extends State<BuildTile>
     //   ),
     // );
     final double endOffsetX =
-        widget.swipeToTigger ? end * widget.swipeThreshold : end;
+        widget.swipeToTrigger ? end * widget.swipeThreshold : end;
 
     ///TODO: Changed: DONE
     _moveAnimation = _moveController!.drive(
@@ -231,11 +371,11 @@ class _BuildTileState extends State<BuildTile>
         await _confirmStartResizeAnimation() == true) {
       ///TODO:changed:Done
 
-      if (widget.swipeToTigger) {
+      if (widget.swipeToTrigger) {
         // final SwipeDirection direction = _swipeDirection;
         // widget.onSwiped(direction);
         // _moveController!.reverse();
-        _handleSwipeToTiggerAnimation();
+        _handleSwipeToTriggerAnimation();
       } else {
         _startResizeAnimation();
       }
@@ -269,7 +409,7 @@ class _BuildTileState extends State<BuildTile>
           // we already know it's not completed, we check that above
           if (_moveController!.value > (widget.swipeThreshold)) {
             ///TODO: changed: DONE
-            if (widget.swipeToTigger) {
+            if (widget.swipeToTrigger) {
               _moveController!.reverse();
             } else {
               _moveController!.forward();
@@ -286,11 +426,11 @@ class _BuildTileState extends State<BuildTile>
 
   Future<void> _handleDismissStatusChanged(AnimationStatus status) async {
     if (status == AnimationStatus.completed && !_dragUnderway) {
-      if (widget.swipeToTigger) {
+      if (widget.swipeToTrigger) {
         // final SwipeDirection direction = _swipeDirection;
         // widget.onSwiped(direction);
         // _moveController!.reverse();
-        _handleSwipeToTiggerAnimation();
+        _handleSwipeToTriggerAnimation();
       } else if (status == AnimationStatus.completed && !_dragUnderway) {
         if (await _confirmStartResizeAnimation() == true) {
           _startResizeAnimation();
@@ -319,7 +459,7 @@ class _BuildTileState extends State<BuildTile>
     return true;
   }
 
-  void _handleSwipeToTiggerAnimation() async {
+  void _handleSwipeToTriggerAnimation() async {
     // assert(_moveController!.isCompleted);
     await _moveController!.reverse();
     final SwipeDirection direction = _swipeDirection;
@@ -331,7 +471,7 @@ class _BuildTileState extends State<BuildTile>
     assert(_moveController!.isCompleted);
     assert(_resizeController == null);
     assert(_sizePriorToCollapse == null);
-    // if (widget.swipeToTigger) {
+    // if (widget.swipeToTrigger) {
     //   final SwipeDirection direction = _swipeDirection;
     //   if (_moveController!.status == AnimationStatus.dismissed) {
     //     widget.onSwiped(direction);
@@ -371,12 +511,15 @@ class _BuildTileState extends State<BuildTile>
     final Widget buildBackground =
         widget.backgroundBuilder(context, _swipeDirection, _moveController!);
     final SwipeDirection direction = widget.direction;
-    final EdgeInsetsGeometry padding = widget.padding;
+    final EdgeInsetsGeometry padding = EdgeInsets.symmetric(
+      horizontal: widget.horizontalPadding,
+      vertical: widget.verticalPadding,
+    );
     final bool isCard = widget.isCard;
     final BoxShadow shadow = widget.shadow;
     final double borderRadius = widget.borderRadius;
     final Color color = widget.color;
-    final bool isEelevated = widget.isEelevated;
+    final bool isElevated = widget.isElevated;
 
     super.build(context); // See AutomaticKeepAliveClientMixin.
 
@@ -437,7 +580,7 @@ class _BuildTileState extends State<BuildTile>
             padding: padding,
             borderRadius: borderRadius,
             color: color,
-            isEelevated: isEelevated,
+            isElevated: isElevated,
           );
     // We are not resizing but we may be being dragging in widget.direction.
     return GestureDetector(

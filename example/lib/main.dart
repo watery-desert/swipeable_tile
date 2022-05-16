@@ -16,16 +16,16 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-          primaryTextTheme: TextTheme(
-            headline6: TextStyle(color: Colors.grey[800]),
-          ),
-          appBarTheme: const AppBarTheme(
-            color: Colors.white,
-            elevation: 0.0,
-          ),
-          primarySwatch: Colors.blue,
-          canvasColor: Colors.white54,
-       ),
+        primaryTextTheme: TextTheme(
+          headline6: TextStyle(color: Colors.grey[800]),
+        ),
+        appBarTheme: const AppBarTheme(
+          color: Colors.white,
+          elevation: 0.0,
+        ),
+        primarySwatch: Colors.blue,
+        canvasColor: Colors.white54,
+      ),
       home: const MyHomePage(),
     );
   }
@@ -69,13 +69,13 @@ class _NormalScreenState extends State<NormalScreen> {
       ),
       backgroundColor: Colors.white,
       body: ListView(
-        children: persons
+        children :  persons
             .map(
               (Person person) => SwipeableTile(
                 color: Colors.white,
                 swipeThreshold: 0.2,
                 direction: SwipeDirection.horizontal,
-                isEelevated: false,
+                isElevated: false,
                 borderRadius: 0,
                 onSwiped: (_) {
                   // final index = persons.indexOf(person);
@@ -225,9 +225,9 @@ class _ChatReplyScreenState extends State<ChatReplyScreen> {
           Expanded(
             child: ListView(children: <Widget>[
               ...persons.map(
-                (Person person) => SwipeableTile.swipeToTigger(
+                (Person person) => SwipeableTile.swipeToTrigger(
                   behavior: HitTestBehavior.translucent,
-                  isEelevated: false,
+                  isElevated: false,
                   color: Colors.white,
                   swipeThreshold: 0.2,
                   direction: SwipeDirection.endToStart,

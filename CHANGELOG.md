@@ -1,3 +1,10 @@
+## 2.0.0
+- Improved folder structure
+- Breaking API change 
+    - `swipeToTrigger` to `swipeToTrigger`
+    - `isEelevated` to `isElevated`
+    - `SwipeableTile.swipeToTiggerCard` to `SwipeableTile.swipeToTriggerCard`
+    - `SwipeableTile.swipeToTigger` to `SwipeableTile.swipeToTrigger`
 ## 1.0.0+11
 - Readme update
 ## 1.0.0+7

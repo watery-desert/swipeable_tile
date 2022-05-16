@@ -20,7 +20,7 @@
 <div>
 
 ## Features
-#### Animated tile and backgound while swiping. Add padding to tile. Swipe to tigger action.
+#### Animated tile and backgound while swiping. Add padding to tile. Swipe to trigger action.
 
 <img src="https://raw.githubusercontent.com/watery-desert/assets/main/swipeable_tile/demo_recording.gif"  width="400"/>
 
@@ -47,7 +47,7 @@ The package is fork of [Dismissible](https://api.flutter.dev/flutter/widgets/Dis
 
 3. It's not possible to animated the background while swiping.
 
-4. Swipe to tigger action function. Similar to telegram or instagram DM message reply.
+4. Swipe to trigger action function. Similar to telegram or instagram DM message reply.
 
 
 ## How to use?
@@ -70,12 +70,12 @@ import 'package:swipeable_tile/swipeable_tile.dart';
 
 ### Do and don't
  - Don't call `setState()` from `backgroundBuilder`.
- - Set the `Scaffold`'s (or whatever background widget you are using) `backgroundColor` and `SwipeableTile` or `SwipeableTile.swipeToTigger`'s `color` same.
+ - Set the `Scaffold`'s (or whatever background widget you are using) `backgroundColor` and `SwipeableTile` or `SwipeableTile.swipeToTrigger`'s `color` same.
 
 
 ### There are four named constructors:
 
-1. `SwipeableTile` When the tile is swiped there will be an elevation (remove elevation by setting `isEelevated` to `false`) and rounded corner to the tile (set `borderRadius` to 0 if you don't want rounded corner).
+1. `SwipeableTile` When the tile is swiped there will be an elevation (remove elevation by setting `isElevated` to `false`) and rounded corner to the tile (set `borderRadius` to 0 if you don't want rounded corner).
 
 ```dart
 SwipeableTile(
@@ -136,9 +136,9 @@ SwipeableTile.card(
 ),
 ```
 
-3. `SwipeableTile.swipeToTigger` This is exactly the same as `SwipeableTile` but instead of dismiss it, it will tigger an action. The tile will return back to initial position when maximum drag reaches `swipeThreshold`
+3. `SwipeableTile.swipeToTrigger` This is exactly the same as `SwipeableTile` but instead of dismiss it, it will trigger an action. The tile will return back to initial position when maximum drag reaches `swipeThreshold`
 
-4. `SwipeableTile.swipeToTiggerCard` This is exactly the same as `SwipeableTile.card` but instead of dismiss it, it will tigger an action. The tile will return back to initial position when maximum drag reaches `swipeThreshold`
+4. `SwipeableTile.swipeToTriggerCard` This is exactly the same as `SwipeableTile.card` but instead of dismiss it, it will trigger an action. The tile will return back to initial position when maximum drag reaches `swipeThreshold`
 
 
 
@@ -157,7 +157,7 @@ You can build the background dynamically and animate them using `backgroundBuild
 
 The `progress` is basically the same animation controller responsible for tile slide animation. You can use this controller to animate the background.
 
-To tigger vibration you have to check when tile is dragged certain animation controller value. And I used [vibration package](https://pub.dev/packages/vibration) for vibration and worked batter than [HapticFeedback](https://api.flutter.dev/flutter/services/HapticFeedback-class.html)
+To trigger vibration you have to check when tile is dragged certain animation controller value. And I used [vibration package](https://pub.dev/packages/vibration) for vibration and worked batter than [HapticFeedback](https://api.flutter.dev/flutter/services/HapticFeedback-class.html)
 
 ```dart
 backgroundBuilder: (context, direction, progress) {
@@ -177,10 +177,10 @@ backgroundBuilder: (context, direction, progress) {
 },
 ```
 
-`swipeThreshold` defines how far you can drag and will consider as dismiss. In case of swipe to tigger this will define maximun drag limit.
+`swipeThreshold` defines how far you can drag and will consider as dismiss. In case of swipe to trigger this will define maximun drag limit.
 
 
-### How to swipe to tigger action?
+### How to swipe to trigger action?
 
 It's possible to do from `backgroundBuilder` using `progress` parameter but to select exact message (or tile) requires calling `setState()` which is not possible from `backgroundBuilder` however you can call `setState()` from `onSwiped` callback which will invoke when the tile return to initial position. 
 
