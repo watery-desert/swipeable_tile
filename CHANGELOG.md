@@ -1,3 +1,5 @@
+## 2.0.0+1
+- Readme update
 ## 2.0.0
 - Improved folder structure
 - Breaking API change 
