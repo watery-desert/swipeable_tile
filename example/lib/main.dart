@@ -69,7 +69,7 @@ class _NormalScreenState extends State<NormalScreen> {
       ),
       backgroundColor: Colors.white,
       body: ListView(
-        children :  persons
+        children: persons
             .map(
               (Person person) => SwipeableTile(
                 color: Colors.white,

@@ -2,11 +2,11 @@
    <img src="https://raw.githubusercontent.com/watery-desert/assets/main/swipeable_tile/package_cover.png" alt="Loading Animation Widget" />
 </p>
 
-
 <div align="center">
 
-[![YouTube Badge](https://img.shields.io/badge/-YouTube-EA3223?style=for-the-badge&labelColor=EA3223&logo=youtube&logoColor=white)](https://www.youtube.com/channel/UCMr8V70B4402CNOJEYQ30Qg)
+[![YouTube Badge](https://img.shields.io/badge/-YouTube-EA3223?style=for-the-badge&labelColor=EA3223&logo=youtube&logoColor=white)](https://www.youtube.com/waterydesert)
 [![Twitter Badge](https://img.shields.io/badge/-Twitter-1ca0f1?style=for-the-badge&logo=twitter&logoColor=white&link=https://twitter.com/watery_desert)](https://twitter.com/watery_desert)
+[![Instagram Badge](https://img.shields.io/badge/-Instagram-e84393?style=for-the-badge&labelColor=e84393&logo=instagram&logoColor=white)](https://instagram.com/watery_desert)
 [![Discord Badge](https://img.shields.io/badge/-Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/f9CC5sEK87)
 [![Patreon Badge](https://img.shields.io/badge/-Patreon-FF424D?style=for-the-badge&labelColor=FF424D&logo=patreon&logoColor=white)](https://www.patreon.com/watery_desert)
 [![BMC Badge](https://img.shields.io/badge/-Buy_Me_a_Coffee-FFDD00?style=for-the-badge&labelColor=FFDD00&logo=buymeacoffee&logoColor=535353)](https://www.buymeacoffee.com/watery_desert)
@@ -19,10 +19,10 @@
 <div>
 
 ## Features
+
 #### Animated tile and backgound while swiping. Add padding to tile. Swipe to trigger action.
 
 <img src="https://raw.githubusercontent.com/watery-desert/assets/main/swipeable_tile/demo_recording.gif"  width="400"/>
-
 
 The package is fork of [Dismissible](https://api.flutter.dev/flutter/widgets/Dismissible-class.html). Without any vertical, up and down swipe.
 
@@ -48,7 +48,6 @@ The package is fork of [Dismissible](https://api.flutter.dev/flutter/widgets/Dis
 
 4. Swipe to trigger action function. Similar to telegram or instagram DM message reply.
 
-
 ## How to use?
 
 #### Installation
@@ -56,21 +55,22 @@ The package is fork of [Dismissible](https://api.flutter.dev/flutter/widgets/Dis
 Add `swipeable_tile` to your `pubspec.yaml` dependencies then run `flutter pub get`
 
 ```yaml
- dependencies:
+dependencies:
   swipeable_tile:
 ```
 
 #### Import
+
 Add this line to import the package.
 
-```dart 
+```dart
 import 'package:swipeable_tile/swipeable_tile.dart';
 ```
 
 ### Do and don't
- - Don't call `setState()` from `backgroundBuilder`.
- - Set the `Scaffold`'s (or whatever background widget you are using) `backgroundColor` and `SwipeableTile` or `SwipeableTile.swipeToTrigger`'s `color` same.
 
+- Don't call `setState()` from `backgroundBuilder`.
+- Set the `Scaffold`'s (or whatever background widget you are using) `backgroundColor` and `SwipeableTile` or `SwipeableTile.swipeToTrigger`'s `color` same.
 
 ### There are four named constructors:
 
@@ -139,18 +139,16 @@ SwipeableTile.card(
 
 4. `SwipeableTile.swipeToTriggerCard` This is exactly the same as `SwipeableTile.card` but instead of dismiss it, it will trigger an action. The tile will return back to initial position when maximum drag reaches `swipeThreshold`
 
+You can build the background dynamically and animate them using `backgroundBuilder`. Use `direction` parameter to check swipe direction and show different widget.
 
-
-You can build the background dynamically and animate them using `backgroundBuilder`. Use `direction` parameter to check swipe direction and show different widget. 
-
- ```dart 
- backgroundBuilder: (context, direction, progress) {
-    if (direction == SwipeDirection.endToStart) {
-        return Container(color: Colors.red);
-    } else if (direction == SwipeDirection.startToEnd) {
-        return Container(color: Colors.blue);
-    }
-    return Container();
+```dart
+backgroundBuilder: (context, direction, progress) {
+   if (direction == SwipeDirection.endToStart) {
+       return Container(color: Colors.red);
+   } else if (direction == SwipeDirection.startToEnd) {
+       return Container(color: Colors.blue);
+   }
+   return Container();
 },
 ```
 
@@ -178,23 +176,21 @@ backgroundBuilder: (context, direction, progress) {
 
 `swipeThreshold` defines how far you can drag and will consider as dismiss. In case of swipe to trigger this will define maximun drag limit.
 
-
 ### How to swipe to trigger action?
 
-It's possible to do from `backgroundBuilder` using `progress` parameter but to select exact message (or tile) requires calling `setState()` which is not possible from `backgroundBuilder` however you can call `setState()` from `onSwiped` callback which will invoke when the tile return to initial position. 
+It's possible to do from `backgroundBuilder` using `progress` parameter but to select exact message (or tile) requires calling `setState()` which is not possible from `backgroundBuilder` however you can call `setState()` from `onSwiped` callback which will invoke when the tile return to initial position.
 
 Vibrate & animate the icon when it's dragged maximum by checking `progress.isCompleted` or you can check animation value. Then call `setState()` from `onSwiped` User will not notice unless you set `movementDuration` to longer time and `swipeThreshold` to 0.4 (which is default). Check the example app how it's implemented.
-
 
 <br>
 <details>
    <summary>All flutter packages</summary>
    <br>
 
-  ● [Sliding Clipped Nav Bar](https://github.com/watery-desert/sliding_clipped_nav_bar)\
-  ● [Water Drop Nav Bar](https://github.com/watery-desert/water_drop_nav_bar)\
-  ➜ [Swipeable Tile](https://github.com/watery-desert/swipeable_tile)\
-  ● [Loading Animation Widget](https://github.com/watery-desert/loading_animation_widget)
+● [Sliding Clipped Nav Bar](https://github.com/watery-desert/sliding_clipped_nav_bar)\
+ ● [Water Drop Nav Bar](https://github.com/watery-desert/water_drop_nav_bar)\
+ ➜ [Swipeable Tile](https://github.com/watery-desert/swipeable_tile)\
+ ● [Loading Animation Widget](https://github.com/watery-desert/loading_animation_widget)
 
    </summary> 
 </details>
