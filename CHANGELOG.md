@@ -1,9 +1,5 @@
-## 2.0.0+3
-- Readme update
-## 2.0.0+2
-- Readme update
-## 2.0.0+1
-- Readme update
+## 2.0.1
+- dart sdk constraint update
 ## 2.0.0
 - Improved folder structure
 - Breaking API change 
